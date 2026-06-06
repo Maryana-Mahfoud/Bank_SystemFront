@@ -1,0 +1,148 @@
+.ak_cardcontiner {
+    max-width: 314px;
+    width: 48%;
+    gap: 24px;
+    opacity: 1;
+    border-radius: 16px;
+    padding: 30px;
+    border: 2px solid var(--br-light);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: var(--bg-main) !important;
+
+    img {
+        max-width: 60px;
+    }
+
+    p {
+        width: 100%;
+        max-width: 160px;
+        height: 60px;
+        opacity: 1;
+        text-align: center;
+        color: var(--text-white);
+        size: 20px;
+    }
+}
+
+.bg-icon {
+    background: var(--gradient);
+}
+
+.ak-inner-circle {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ak-outer-circle {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+@media (max-width:1440px) {
+    .ak_cardcontiner {
+        max-width: 260px;
+        gap: 10px;
+        opacity: 1;
+        border-radius: 16px;
+        padding: 20px;
+        background-color: var(--light-bg);
+        border: 2px solid var(--br-light);
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        box-sizing: border-box;
+
+        img {
+            max-width: 60px;
+        }
+
+        p {
+            width: 100%;
+            max-width: 160px;
+            height: 60px;
+            opacity: 1;
+            text-align: center;
+            color: var(--text-white);
+            size: 20px;
+        }
+    }
+
+    .bg-icon {
+        background: var(--gradient);
+    }
+
+    .ak-inner-circle {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ak-outer-circle {
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+
+
+@media (max-width:992px) {
+    .ak_cardcontiner {
+        width: 45%;
+        gap: 14px;
+        padding: 15px;
+        margin: 10px auto;
+
+        img {
+            gap: 10px;
+            opacity: 1;
+            border-radius: 50px;
+        }
+
+        p {
+            width: 100%;
+            max-width: 126px;
+            height: auto;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 150%;
+            letter-spacing: 0%;
+        }
+    }
+
+    .ak-inner-circle {
+        width: 56px;
+        height: 56px;
+
+    }
+
+    .ak-outer-circle {
+        width: 72px;
+        height: 72px;
+
+    }
+}

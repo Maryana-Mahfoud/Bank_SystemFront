@@ -1,0 +1,154 @@
+.ma-financial-cta {
+  position: relative;
+  max-width: 1596px;
+  display: flex;
+  border-radius: 20px;
+  margin: 0 162px;
+  margin-top: 150px;
+  margin-bottom: 180px;
+  padding-right: 80px;
+  gap: 150px;
+  background: linear-gradient(
+    267.5deg, #1c1c1c 65.67%, rgba(28, 28, 28, 0.4) 99.81%), url(/Images/HomePage/Bg.png), #1C1C1C;
+  background-blend-mode: normal, screen, normal;
+  z-index: 1;
+}
+
+.ma-financial-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding-left: 1px;
+  border-radius: 20px;
+  background: linear-gradient(95.43deg,
+      rgba(202, 255, 51, 0.2) 0%,
+      rgba(202, 255, 51, 0) 5.36%);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.ma-cta-image {
+  position: absolute;
+  left: 0px;
+  top: 0;
+  width: 298px;
+  height: 238px;
+  z-index: 2;
+}
+
+.ma-text-overlay {
+  padding: 80px 0;
+  padding-left: 80px;
+}
+
+.ma-financial-cta.ma-text-overlay.ma-card-titlee {
+  font-weight: 400;
+  font-size: 40px;
+  color: var(--text-white);
+}
+
+.ma-card-description {
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--text-description);
+}
+
+.ma-finical-btn {
+  min-width: 183px;
+  height: 63px;
+  border-radius: 82px;
+  padding: 18px 30px;
+  box-sizing: border-box;
+  margin-top: 112px;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--light-bg);
+  background-color: var(--primary-color);
+  border: none;
+}
+
+/* =======================
+    Responsive
+======================= */
+
+@media screen and (max-width:1440px) {
+  .ma-financial-cta {
+    margin: 0px auto;
+    margin-top: 120px;
+    margin-bottom: 150px;
+    max-width: 1280px;
+    width: 95%;
+  }
+
+  .ma-text-overlay {
+    padding: 60px 0;
+    padding-left: 60px;
+  }
+
+  .ma-card-title {
+    font-size: 30px;
+  }
+
+  .ma-card-description {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .ma-finical-btn {
+    margin-top: 87px;
+    min-width: 136px;
+    height: 45px;
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width:992px) {
+  .ma-financial-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0px auto;
+    margin-top: 80px;
+    align-items: center;
+    height: auto;
+    text-align: center;
+    padding: 30px;
+    margin-bottom: 80px;
+  }
+  
+  .ma-financial-cta h1 {
+    font-size: 24px;
+  }
+
+  .ma-cta-image {
+    width: 151px;
+    height: 143px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+  }
+
+  .ma-text-overlay {
+    padding: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ma-card-description {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  .ma-finical-btn {
+    min-width: 144px;
+    border-radius: 82px;
+    padding: 14px 24px;
+    box-sizing: border-box;
+    margin-top: 24px;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+  }
+}
