@@ -3,6 +3,8 @@ import { useEffect, useState, useCallback } from "react";
 import { DashboardHeader } from "../components/DashboardComponent/DashboardHeader/DashboardHeader";
 import { DashboardNotification } from "../components/DashboardComponent/DashboardNotifocations/DashboardNotification";
 import type { Notification } from "../components/sharedComponents/interfaces/Notification";
+import { RecentTransactions } from "../components/DashboardComponent/RecentTransictions/RecentTransictions";
+import WithdrawalModal from "../components/DashboardComponent/WithdrawalModal/WithdrawalModal";
 
 export default function Dashboard() {
     const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -87,6 +89,11 @@ useEffect(() => {
                     onDelete={handleDelete}
                 />
             )}
+
+            <section>
+                <RecentTransactions/>
+                <WithdrawalModal/>
+            </section>
         </div>
     );
 }
