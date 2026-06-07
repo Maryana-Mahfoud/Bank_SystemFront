@@ -41,11 +41,11 @@ export default function Dashboard() {
     };
 
     const handleMarkAllAsRead = async () => {
-        const token = localStorage.getItem("token");
-        await fetch("http://127.0.0.1:8000/api/notifications/read-all", {
-            method: "POST",
-            headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` }
-        });
+            const token = localStorage.getItem("token");
+            await fetch("http://127.0.0.1:8000/api/notifications/mark-all-read", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` }
+            });
         fetchNotifications();
     };
 
@@ -88,12 +88,14 @@ useEffect(() => {
                     onMarkAllAsRead={handleMarkAllAsRead}
                     onDelete={handleDelete}
                 />
-            )}
 
+                
+            )}
             <section>
-                <RecentTransactions/>
+                <RecentTransactions />
                 <WithdrawalModal/>
             </section>
+            
         </div>
     );
 }

@@ -1,33 +1,54 @@
 import { useEffect, useState, useCallback } from "react";
 import type { AccountRequest } from "../components/sharedComponents/interfaces/Admin";
+import type { Notification } from "../components/sharedComponents/interfaces/Notification";
 import AdminTable from "../components/sharedComponents/AdminTable/AdminTable";
-import "../components/sharedComponents/AdminTable/AdminTable.css";
 import { DashboardHeader } from "../components/DashboardComponent/DashboardHeader/DashboardHeader";
 import { DashboardNotification } from "../components/DashboardComponent/DashboardNotifocations/DashboardNotification";
-import type { Notification } from "../components/sharedComponents/interfaces/Notification";
+import StatisticsSection from "../components/AdminDashboard/StatisticsSection/StatisticsSection";
+import UsersSection from "../components/AdminDashboard/UsersSection/UsersSection";
+import CustomersSection from "../components/AdminDashboard/CustomersSection/CustomersSection";
+import EmployeesSection from "../components/AdminDashboard/EmployeesSection/EmployeesSection";
+import "../components/sharedComponents/AdminTable/AdminTable.css";
 
+/// ── API & Auth Helpers ─────────────────────────────────────────────────────
+const API = "http://127.0.0.1:8000/api";
+const getToken = () => localStorage.getItem("admin_token") || localStorage.getItem("token");
+const authHeaders = () => ({
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getToken()}`,
+});
+// ── Types & Constants ─────────────────────────────────────────────────────
+type ActiveTab = "statistics" | "users" | "customers" | "employees";
+//array of objects that contains the key, label and icon for each tab in the admin dashboard
+const TABS: { key: ActiveTab; label: string; icon: string }[] = [
+    { key: "statistics", label: "Statistics", icon: "📊" },
+    { key: "users",      label: "Users",      icon: "👥" },
+    { key: "customers",  label: "Customers",  icon: "🏦" },
+    { key: "employees",  label: "Employees",  icon: "💼" },
+];
+// ── Main Component ─────────────────────────────────────────────────────
 export default function AdminDashboard() {
+    const [activeTab, setActiveTab] = useState<ActiveTab>("statistics");
     const [requests, setRequests] = useState<AccountRequest[]>([]);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [unreadCount, setUnreadCount] = useState<number>(0);
     const [loadingNotif, setLoadingNotif] = useState<boolean>(true);
     const [showNotifications, setShowNotifications] = useState(false);
-    const [popup, setPopup] = useState({ 
-        show: false, 
-        type: "success" as "success" | "error", 
-        message: "" 
+    const [popup, setPopup] = useState({
+        show: false,
+        type: "success" as "success" | "error",
+        message: "",
     });
 
+    // ── Notifications Logic ──────────────────────────────────────────────────
     const fetchNotifications = useCallback(async () => {
         const token = localStorage.getItem("token");
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/notifications/all", {
-                headers: { 
-                    "Accept": "application/json", 
-                    "Authorization": `Bearer ${token}`
-                }
+            const res = await fetch(`${API}/notifications/all`, {
+                headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` },
             });
-            const result = await response.json();
+            const result = await res.json();
             setNotifications(result.notifications || []);
             setUnreadCount(result.unread_count || 0);
         } catch (error) {
@@ -37,181 +58,137 @@ export default function AdminDashboard() {
         }
     }, []);
 
+    useEffect(() => { 
+        // eslint-disable-next-line
+        fetchNotifications(); }, [fetchNotifications]);
+        //function to mark a notification as read by its id
     const handleMarkAsRead = async (id: number) => {
-        //fetch to mark as read, then refresh notifications
         const token = localStorage.getItem("token");
-        await fetch(`http://127.0.0.1:8000/api/notifications/${id}/read`, {
+        await fetch(`${API}/notifications/${id}/read`, {
             method: "POST",
-            headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` }
+            headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` },
         });
         fetchNotifications();
     };
-    // Mark all as read
+    //function to mark all notifications as read
     const handleMarkAllAsRead = async () => {
         const token = localStorage.getItem("token");
-        await fetch("http://127.0.0.1:8000/api/notifications/read-all", {
+        await fetch(`${API}/notifications/mark-all-read`, {
             method: "POST",
-            headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` }
+            headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` },
         });
         fetchNotifications();
     };
-// Delete notification
+    //function to delete a notification by its id
     const handleDeleteNotification = async (id: number) => {
         const token = localStorage.getItem("token");
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/api/notifications/${id}`, {
-                method: "DELETE",
-                headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" }
-            });
-            if (!response.ok) throw new Error("Failed to delete");
-            fetchNotifications();
-        } catch (error) {
-            console.error("Error deleting:", error);
-        }
-    };
-
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+        await fetch(`${API}/notifications/${id}`, {
+            method: "DELETE",
+            headers: { "Accept": "application/json", "Authorization": `Bearer ${token}` },
+        });
         fetchNotifications();
+    };
+
+    // ── Account Requests Logic ────────────────────────────────────────────────
+    const fetchRequests = useCallback(async () => {
+        try {
+            const res = await fetch(`${API}/account/requests`, { headers: authHeaders() });
+            const result = await res.json();
+            setRequests(Array.isArray(result.data) ? result.data : result);
+        } catch (error) { console.error("Fetch requests error", error); }
     }, []);
 
-    const triggerRefresh = async () => {
-        try {
-            
-            const token = localStorage.getItem("admin_token") || localStorage.getItem("token");
-            const response = await fetch("http://127.0.0.1:8000/api/account/requests", {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            //fetch can succeed but return an error status, so we check response.ok before parsing JSON
-            if (!response.ok) throw new Error(`Server status: ${response.status}`);
-            const result = await response.json();
-            setRequests(Array.isArray(result.data) ? result.data : result); 
-        } catch (error) {
-            console.error("Refresh error", error);
-        }
-    };
-// Initial data load for account requests
     useEffect(() => {
-        let isMounted = true;
-        const loadInitialData = async () => {
-            try {
-                const token = localStorage.getItem("admin_token") || localStorage.getItem("token");
-                const response = await fetch("http://127.0.0.1:8000/api/account/requests", {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-                if (!response.ok) throw new Error(`Server status: ${response.status}`);
-                const result = await response.json();
-                if (isMounted) setRequests(Array.isArray(result.data) ? result.data : result);
-            } catch (error) {
-                console.error("Fetch error", error);
-            }
-        };
-        loadInitialData();
-        return () => { isMounted = false; };
-    }, []);
-// Handle accept and reject actions with improved error handling and user feedback
+        // eslint-disable-next-line
+        fetchRequests(); }, [fetchRequests]);
+        //function to accept a bank account request by its id
     const handleAccept = async (id: number) => {
         try {
-            const token = localStorage.getItem("admin_token") || localStorage.getItem("token");
-            const response = await fetch(`http://127.0.0.1:8000/api/account/${id}/accept`, {
-                method: "POST",
-                headers: { 
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            const result = await response.json().catch(() => ({}));
-            if (!response.ok) throw new Error(result.message || "Failed to accept the request.");
-            setPopup({ 
-                show: true, 
-                type: "success", 
-                message: `${result.message || "Request approved successfully"}. Verification Code: ${result.data?.verification_code || 'N/A'}` 
-            });
-            triggerRefresh();
-        } catch (error: unknown) {
-            console.error(error);
-            setPopup({ show: true, type: "error", message: (error as Error).message || "Connection error during acceptance." });
-        }
+            const res = await fetch(`${API}/account/${id}/accept`, { method: "POST", headers: authHeaders() });
+            const result = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(result.message || "Failed to accept.");
+            setPopup({ show: true, type: "success", message: "Approved successfully" });
+            fetchRequests();
+        } catch (error: unknown) { 
+            const errorMessage = error instanceof Error ? error.message : "Failed to accept.";  
+            setPopup({ show: true, type: "error", message: errorMessage }); }
     };
-// Similar structure for handleReject with specific error handling for validation errors 
-// and network issues
+    //function to reject a bank account request by its id
     const handleReject = async (id: number) => {
         try {
-            const token = localStorage.getItem("admin_token") || localStorage.getItem("token");
-            const response = await fetch(`http://127.0.0.1:8000/api/account/${id}/reject`, {
-                method: "POST",
-                headers: { 
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            const result = await response.json().catch(() => ({ message: "Server error occurred." }));
-            if (response.status === 422) {
-                setPopup({ show: true, type: "error", message: result.message });
-            } else if (response.ok) {
-                setPopup({ show: true, type: "success", message: result.message || "Request has been rejected successfully." });
-                triggerRefresh();
-            } else {
-                throw new Error(result.message || "Failed to reject request.");
-            }
-        } catch (error: unknown) {
-            console.error(error);
-            setPopup({ show: true, type: "error", message: (error as Error).message || "Network error during rejection." });
-        }
+            const res = await fetch(`${API}/account/${id}/reject`, 
+                { method: "POST", headers: authHeaders() });
+            const result = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(result.message || "Failed to reject.");
+            setPopup({ show: true, type: "success", message: "Rejected successfully" });
+            fetchRequests();
+        } catch (error: unknown) { 
+            const errorMessage = error instanceof Error ? error.message : "Failed to reject.";
+            setPopup({ show: true, type: "error", message: errorMessage }); }
     };
 
     return (
         <div className="admin-dashboard-wrapper">
+            
+            {/* 1. Header*/}
             <DashboardHeader 
                 onToggleNotifications={() => setShowNotifications(!showNotifications)} 
-                unreadCount={unreadCount}
+                unreadCount={unreadCount} 
             />
+
+            {/* 2. Notifications */}
             {showNotifications && (
                 <DashboardNotification 
-                    notifications={notifications}
-                    unreadCount={unreadCount}
-                    loading={loadingNotif}
-                    onMarkAsRead={handleMarkAsRead}
-                    onMarkAllAsRead={handleMarkAllAsRead}
-                    onDelete={handleDeleteNotification}
+                    notifications={notifications} 
+                    unreadCount={unreadCount} 
+                    loading={loadingNotif} 
+                    onMarkAsRead={handleMarkAsRead} 
+                    onMarkAllAsRead={handleMarkAllAsRead} 
+                    onDelete={handleDeleteNotification} 
                 />
             )}
 
+            {/* 3. Navigation Tabs */}
+            <div className="ad-nav">
+                {TABS.map(t => (
+                    <button
+                        key={t.key}
+                        className={`ad-nav-btn ${activeTab === t.key ? "active" : ""}`}
+                        onClick={() => setActiveTab(t.key)}
+                    >
+                        <span>{t.icon}</span>
+                        {t.label}
+                    </button>
+                ))}
+            </div>
+
+            {/* 4. Page Title */}
             <header className="admin-header">
                 <h1>Bank Account Requests Management</h1>
                 <p>Monitor and process incoming banking applications</p>
             </header>
 
-            <AdminTable 
-                requests={requests} 
-                onAccept={handleAccept} 
-                onReject={handleReject} 
-            />
+            {/* 5. Content */}
+            <main className="ad-content">
+                {activeTab === "statistics" && (
+                    <>
+                        <AdminTable requests={requests} onAccept={handleAccept} onReject={handleReject} />
+                        <StatisticsSection />
+                    </>
+                )}
+                {activeTab === "users"      && <UsersSection />}
+                {activeTab === "customers"  && <CustomersSection />}
+                {activeTab === "employees"  && <EmployeesSection />}
+            </main>
 
+            {/* 6. Popup */}
             {popup.show && (
                 <div className="mh-popup-overlay">
                     <div className={`mh-popup-card ${popup.type}`}>
-                        <div className="popup-icon">
-                            {popup.type === "success" ? "✓" : "✕"}
-                        </div>
+                        <div className="popup-icon">{popup.type === "success" ? "✓" : "✕"}</div>
                         <h3>{popup.type === "success" ? "Operation Successful" : "Action Stopped"}</h3>
                         <p>{popup.message}</p>
-                        <button 
-                            className="btn-close-popup"
-                            onClick={() => setPopup(prev => ({ ...prev, show: false }))}
-                        >
+                        <button className="btn-close-popup" onClick={() => setPopup(p => ({ ...p, show: false }))}>
                             Confirm & Close
                         </button>
                     </div>
