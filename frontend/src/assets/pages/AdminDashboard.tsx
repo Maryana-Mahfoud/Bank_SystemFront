@@ -102,17 +102,23 @@ export default function AdminDashboard() {
         // eslint-disable-next-line
         fetchRequests(); }, [fetchRequests]);
         //function to accept a bank account request by its id
-    const handleAccept = async (id: number) => {
-        try {
-            const res = await fetch(`${API}/account/${id}/accept`, { method: "POST", headers: authHeaders() });
-            const result = await res.json().catch(() => ({}));
-            if (!res.ok) throw new Error(result.message || "Failed to accept.");
-            setPopup({ show: true, type: "success", message: "Approved successfully" });
-            fetchRequests();
-        } catch (error: unknown) { 
-            const errorMessage = error instanceof Error ? error.message : "Failed to accept.";  
-            setPopup({ show: true, type: "error", message: errorMessage }); }
-    };
+        const handleAccept = async (id: number) => {
+            try {
+                const res = await fetch(`${API}/account/${id}/accept`, { method: "POST", headers: authHeaders() });
+                const result = await res.json().catch(() => ({}));
+                if (!res.ok) throw new Error(result.message || "Failed to accept.");
+                console.log("result from backend:", result);
+                const code = result.data?.verification_code || result.verification_code || result.code || result.otp || "";
+                const message = code 
+                    ? `Approved successfully\nVerification Code: ${code}` 
+                    : "Approved successfully";
+                
+                setPopup({ show: true, type: "success", message });
+                fetchRequests();
+            } catch (error: unknown) { 
+                const errorMessage = error instanceof Error ? error.message : "Failed to accept.";  
+                setPopup({ show: true, type: "error", message: errorMessage }); }
+        };
     //function to reject a bank account request by its id
     const handleReject = async (id: number) => {
         try {
@@ -179,7 +185,9 @@ export default function AdminDashboard() {
                 {activeTab === "users"      && <UsersSection />}
                 {activeTab === "customers"  && <CustomersSection />}
                 {activeTab === "employees"  && <EmployeesSection />}
+                
             </main>
+            
 
             {/* 6. Popup */}
             {popup.show && (
@@ -194,6 +202,7 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             )}
+            
         </div>
     );
 }
