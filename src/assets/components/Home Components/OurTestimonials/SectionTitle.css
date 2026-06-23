@@ -1,0 +1,118 @@
+/* 1920px */
+.ma-container {
+    max-width: 1596px;
+    gap: 300px;
+    margin: 0 auto;
+    width: 95%;
+}
+
+.ma-fsection h1 {
+    font-size: 48px;
+}
+
+.ma-fsection p {
+    max-width: 910px;
+    font-size: 18px;
+    font-weight: 300;
+    margin-top: 14px;
+}
+
+.ma-btns {
+    background-color: var(--light-bg);
+    border-radius: 80px;
+    border: 1px solid var(--br-light);
+    padding: 14px;
+    /* margin-top: 57px; */
+    display: flex;
+    align-self: flex-end;
+}
+
+/* Button */
+.mar-btn {
+    padding: 14px 24px;
+    gap: 10px;
+    width: 181px;
+    height: 55px;
+    border-radius: 140px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    font-size: 18px;
+
+}
+
+.mar-btn.active {
+    background-color: var(--primary-color);
+    color: var(--text-button-dark-);
+}
+
+.mar-btn:hover:not(.active) {
+    color: var(--text-white);
+    background-color: var(--lighter-bg);
+}
+
+/* 1440px */
+@media (max-width:1440px) {
+    .ma-container {
+        max-width: 1280px;
+        gap: 150px;
+    }
+
+    .ma-fsection p {
+        max-width: 831px;
+        font-size: 14px;
+    }
+
+    .ma-btns {
+        padding: 12px;
+        width: 299px;
+        height: 65px;
+        border: 1px solid #262626;
+        border-radius: 82px;
+
+    }
+
+    .mar-btn {
+        font-size: 12px;
+        align-items: center;
+        padding: 10px 18px;
+        gap: 10px;
+        width: 139px;
+        height: 41px;
+        border-radius: 140px;
+    }
+
+    .ma-fsection h1 {
+        font-size: 38px;
+    }
+
+}
+
+/* 390px */
+@media (max-width:992px) {
+    .ma-container {
+        max-width: 358px;
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+        .ma-fsection h1 {
+        font-size: 28px;
+    }
+
+    .ma-fsection p {
+        max-width: 358px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+
+    .ma-btns {
+        margin-top: 0px;
+        align-self: center;
+    }
+
+    .ma-btn {
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+}

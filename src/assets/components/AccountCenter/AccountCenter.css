@@ -1,0 +1,113 @@
+/* --- المتغيرات العامة --- */
+:root {
+    --primary-green: #c4f145;
+    --bg-dark: #121212;
+    --card-bg: #1e1e1e;
+    --text-white: #ffffff;
+    --border-color: #333;
+}
+
+body { margin: 0; background-color: var(--bg-dark); color: var(--text-white); font-family: sans-serif; }
+
+/* --- الحاوية الرئيسية --- */
+.account-container { 
+    display: flex; 
+    min-height: 100vh; 
+    width: 100%; 
+    padding-top: 80px; 
+    box-sizing: border-box;
+}
+
+/* --- السايد بار --- */
+.ac-sidebar { 
+    width: 250px; 
+    padding: 30px; 
+    background: var(--card-bg); 
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.ac-sidebar h2 { color: var(--primary-green); margin-bottom: 40px; }
+
+.ad-nav { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 15px; }
+
+.ac-nav-item { 
+    padding: 15px 20px; 
+    cursor: pointer; 
+    border-radius: 8px; 
+    background: #2a2a2a; 
+    transition: 0.3s; 
+    text-transform: capitalize;
+}
+
+.ac-nav-item.active { background: var(--primary-green); color: #000; font-weight: bold; }
+
+/* --- المحتوى --- */
+.ac-content { flex: 1; padding: 40px; }
+
+h1 { color: var(--text-white); margin-bottom: 25px; }
+h2 { color: var(--primary-green); margin-top: 40px; margin-bottom: 20px; }
+
+.ad-section { width: 100%; max-width: 800px; }
+
+/* --- حاوية الأزرار المعدلة --- */
+.ac-actions-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 100%;
+    margin: 20px 0;
+    flex-wrap: wrap; /* للسماح بالالتفاف في الشاشات الصغيرة */
+}
+
+/* --- تنسيق الأزرار المعدل --- */
+.action-btn, .ad-btn-add {
+    flex: 0 1 auto;
+    padding: 12px 30px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    background: var(--primary-green);
+    color: #000;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.action-btn:hover, .ad-btn-add:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+/* --- تنسيق الجدول --- */
+.transaction-container { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); }
+.ad-table { width: 100%; border-collapse: collapse; color: #fff; }
+.ad-table th { text-align: left; padding: 15px; color: var(--primary-green); border-bottom: 2px solid var(--border-color); text-transform: uppercase; font-size: 14px; }
+.ad-table td { padding: 15px; border-bottom: 1px solid var(--border-color); font-size: 15px; }
+.ad-table tbody tr:hover { background-color: #2a2a2a; }
+
+/* --- النماذج --- */
+.profile-form, .ad-modal {
+    display: flex; flex-direction: column; gap: 20px; background: var(--card-bg);
+    padding: 40px; border-radius: 16px; border: 1px solid var(--border-color);
+    width: 100%; max-width: 500px;
+}
+
+.form-group label, .ad-modal label { font-weight: bold; color: var(--primary-green); }
+.form-group input, .ad-modal input { 
+    width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ccc;
+    background: #fff; color: #000; box-sizing: border-box;
+}
+
+/* --- التجاوب (Mobile) --- */
+@media (max-width: 768px) {
+    .account-container { flex-direction: column; padding-top: 60px; }
+    .ac-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); }
+    .ad-nav { flex-direction: row; overflow-x: auto; }
+    
+    /* الأزرار تأخذ العرض الكامل في الموبايل */
+    .ac-actions-container { flex-direction: column; align-items: stretch; }
+    .action-btn, .ad-btn-add { width: 100%; }
+}

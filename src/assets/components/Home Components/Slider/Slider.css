@@ -1,0 +1,301 @@
+.ma-container-slider {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    max-width: 1596px;
+    margin: 0 auto;
+    margin-top: 100px;
+
+}
+
+.ma-slider-wrapper-parent {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.ma-slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.slider-container {
+    display: flex;
+    gap: 80px;
+    transition: transform 0.5s ease-in-out;
+    max-width: 1372px;
+    margin-left:auto ;
+    margin-right: auto;
+}
+
+.slider-container .card {
+    width: calc((100% / 3) - (163px / 3));
+    ;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ma-fcontrols .ma-leftbtn,
+.ma-scontrols .ma-rightbtn {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background-color: var(--light-bg);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card .img-container {
+    height: 60px;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--br-light);
+
+    .image2 {
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        z-index: 3;
+
+    }
+}
+
+.slider-container .card .paragraph p {
+    margin: 50px 0;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    color: var(--text-white);
+
+}
+
+.slider-container .card .name {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.slider-container .card .name span {
+    font-size: 18px;
+}
+
+/* Fade Out Left */
+.fade-left {
+    position: absolute;
+    width: 556px;
+    height: 349px;
+    left: 0px;
+    top: calc(50% - 349px/2 - 0.5px);
+
+    background: linear-gradient(270deg, rgba(28, 28, 28, 0) 0%, #1a1a1a 105.84%);
+    mix-blend-mode: normal;
+    flex: none;
+    order: 3;
+    flex-grow: 0;
+    z-index: 3;
+}
+
+/* Fade Out Right */
+.fade-right {
+    position: absolute;
+    width: 480px;
+    height: 349px;
+    right: 0px;
+    top: calc(50% - 349px/2 - 0.5px);
+    background: linear-gradient(270deg, #1a1a1a 10.8%, rgba(28, 28, 28, 0) 105.84%);
+    mix-blend-mode: normal;
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+    z-index: 4;
+}
+
+/*1440*/
+@media (max-width:1440px) {
+    .ma-container-slider {
+
+        position: relative;
+        width: 100%;
+        margin-top: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        width: 95%;
+        max-width: 1280px;
+        margin: 80px auto;
+
+    }
+
+    .slider-container {
+        display: flex;
+        gap: 60px;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slider-container .card {
+        width: calc((100% / 3) - (120px / 3));
+        ;
+        flex-shrink: 0;
+    }
+
+.card .img-container .image2 {
+    width: 36px;
+}
+
+    .slider-container .card .paragraph p {
+        margin-top: 60px;
+        margin-bottom: 40px;
+        font-size: 16px;
+        text-align: center;
+        font-family: 'Lexend';
+        font-weight: 400;
+        color: var(--text-white);
+    }
+
+    .fade-left {
+        background-image: linear-gradient(to right, #1a1a1a 0%, rgba(28, 28, 28, 0) 100%) !important;
+        width: 398px;
+    }
+
+    .fade-right {
+        background-image: linear-gradient(to left, #1a1a1a 0%, rgba(28, 28, 28, 0) 100%) !important;
+        width: 358px;
+    }
+
+}
+
+@media (max-width:992px) {
+    .ma-container-slider {
+        position: relative;
+        width: 95%;
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .slider-container {
+        display: flex;
+        gap: 50px;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slider-container .card {
+        width: calc((100% / 2) - (100px / 2));
+        flex-shrink: 0;
+    }
+
+    .slider-container .card .paragraph p {
+        /* padding-top: 20px; */
+        font-size: 14px;
+        text-align: center;
+        max-width: 318px;
+
+        margin: 30px auto;
+        margin-top: 52px;
+    }
+
+    .fade-left {
+        background-image: linear-gradient(to right, #1a1a1a 0%, rgba(28, 28, 28, 0) 100%) !important;
+        width: 180px;
+    }
+
+
+    .fade-right {
+        background-image: linear-gradient(to left, #1a1a1a 0%, rgba(28, 28, 28, 0) 100%) !important;
+        width: 180px;
+    }
+
+}
+
+@media (max-width:700px) {
+
+.Our-Testimonials-Container {
+    max-width: 358px;
+    width: 95%;
+    margin: 80px auto;
+}
+
+    .ma-container-slider {
+        flex-direction: row;
+        align-items: center;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        border-radius: 20px;
+    }
+
+    .ma-slider-wrapper-parent {
+        order: 1;
+        flex: 0 0 100%;
+        width: 100%;
+        border: 1px solid var(--br-light);
+        border-radius: 20px;
+    }
+
+    .slider-container {
+        order: 1;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slider-container .card {
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    .card .img-container {
+        padding: 20px;
+        height: 60px;
+        position: relative;
+        z-index: 1;
+        border-bottom: 1px solid var(--br-light);
+
+        .image2 {
+            width: 44px;
+            position: absolute;
+            left: 44%;
+            z-index: 3;
+        }
+    }
+
+    .slider-container .card .paragraph {
+        text-align: center;
+        max-width: 318px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+
+    .ma-fcontrols,
+    .ma-scontrols {
+        order: 2;
+        padding: 0 !important;
+        display: inline-flex;
+        justify-content: center;
+    }
+
+    .ma-fcontrols {
+        margin-right: 10px;
+    }
+
+    .fade-left {
+        width: 85px;
+    }
+
+    .fade-right {
+        width: 150px;
+    }
+
+    .slider-container .card .name {
+        margin-bottom: 20px;
+    }
+}

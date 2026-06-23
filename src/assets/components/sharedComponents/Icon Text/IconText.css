@@ -1,0 +1,21 @@
+.ma-icon-text {
+  display: flex;
+  align-items: center;
+  gap: 6px; 
+}
+
+.ma-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.ma-text {
+
+font-weight: 300;
+font-style: Light;
+font-size: 18px;
+line-height: 24px;
+color: var(--text-white);
+
+
+}
