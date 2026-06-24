@@ -31,13 +31,24 @@ const roleLinks = () => {
             </>
         );
     }
+    console.log("User role is:", user.role);
 
     if (user.role === "customer") {
         return (
             <>
                 <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink></li>
+                 <li><NavLink to='/account' className={({ isActive }) => isActive ? "active" : ""}>AccountCenter</NavLink></li>
                 <li><NavLink to="/dashboard" className={({ isActive }) => isActive ? "active" : ""}>Dashboard</NavLink></li>
                 <li><NavLink to="/verify-account" className={({ isActive }) => isActive ? "active" : ""}>Verify Account</NavLink></li>
+                
+            </>
+        );
+    }
+       if (user.role === "employee") {
+        return (
+            <>
+                <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink></li>
+                <li><NavLink to="/EmployeeDashboard" className={({ isActive }) => isActive ? "active" : ""}>Employee Dashboard</NavLink></li>
             </>
         );
     }
