@@ -8,6 +8,8 @@ import AdminDashboard from '../pages/AdminDashboard';
 import VerifyAccount from '../pages/VerifyAccount';
 import Register from '../pages/Register';
 import { ProtectedRoute, AdminRoute, GuestRoute } from '../components/sharedComponents/ProtectRoute/ProtectRoute';
+import EmployeeDashboard from '../pages/EmployeeDashboard';
+import AccountCenter from '../pages/AccountCenter';
 
 export const router = createBrowserRouter([{
     path:'/',
@@ -37,9 +39,16 @@ export const router = createBrowserRouter([{
             path: 'admin/dashboard',
             element: <AdminRoute><AdminDashboard /></AdminRoute>
         },
+         {
+            path: '/account',
+            element: <AccountCenter />
+            },
         {
             path:"verify-account",
             element:<VerifyAccount/>
-        }
+        },
+        { path: '/EmployeeDashboard',
+        element: <ProtectedRoute><EmployeeDashboard/></ProtectedRoute> 
+        },
     ]
 }])

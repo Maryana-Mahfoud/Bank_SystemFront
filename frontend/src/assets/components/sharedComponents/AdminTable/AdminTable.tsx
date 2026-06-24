@@ -1,9 +1,13 @@
-import type {  AdminTableProps } from "../interfaces/Admin";
 import "./AdminTable.css";
 
+interface AdminTableProps {
+    requests: any[];
+    onAccept: (id: number) => void;
+    onReject: (id: number) => void;
+    onShow: (request: any) => void; 
+}
 
-
-export default function AdminTable({ requests, onAccept, onReject }: AdminTableProps) {
+export default function AdminTable({ requests, onAccept, onReject, onShow }: AdminTableProps) {
     return (
         <div className="table-container">
             <table className="admin-table">
@@ -31,6 +35,15 @@ export default function AdminTable({ requests, onAccept, onReject }: AdminTableP
                                     </span>
                                 </td>
                                 <td className="actions-cell">
+                                    {/* زر الـ Show */}
+                                    <button 
+                                        className="btn-show" 
+                                        onClick={() => onShow(req)}
+                                    >
+                                        Show
+                                    </button>
+
+                                    {/* زر الـ Accept */}
                                     <button 
                                         className="btn-accept" 
                                         onClick={() => onAccept(req.id)}
@@ -38,6 +51,8 @@ export default function AdminTable({ requests, onAccept, onReject }: AdminTableP
                                     >
                                         Accept
                                     </button>
+                                    
+                                    {/* زر الـ Reject */}
                                     <button 
                                         className="btn-reject" 
                                         onClick={() => onReject(req.id)}
